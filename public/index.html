@@ -3,7 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personal Budget</title>
+    <!--
+        This is an SEO Change
+        The title was made slightly longer to fit into the "ideal length"
+        I changed this due to the Woorank results of my page
+        The titles on the other 2 pages were changed to match this as well
+    -->
+    <title>Personal Budget Homepage</title>
     <meta name="description" content="A free personal budget app">
     <meta name="keywords" content="app free budget finance">
     <!--
@@ -31,7 +37,12 @@
                 This is a Semantic HTML Change 
                 Links were edited to lead to the right place
             -->
-            <li><a href="index.html">Home</a></li>
+            <li><a href="./">Homepage</a></li>
+            <!--
+                This is an SEO Change
+                I expanded the about and login pages only up to the navbar and "hero"
+                I got a bunch of warnings about this from a Screaming Frog SEO Report
+            -->
             <li><a href="about.html">About</a></li>
             <li><a href="login.html">Login</a></li>
             <li><a href="https://google.com">Google</a></li>
@@ -121,12 +132,14 @@
         </div>
     </footer>
 
-    <!--
-        This is a Semantic HTML Change
-        Defer was added to both -->
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js" integrity="sha512-quHCp3WbBNkwLfYUMd+KwBAgpVukJu5MncuQaWXgCrfgcxCJAq/fo+oqrRKOj+UKEmyMCG3tb8RB63W+EmrOBg==" crossorigin="anonymous"></script>
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha512-s+xg36jbIujB2S2VKfpGmlC3T5V2TF3lY48DX7u2r9XzGzgPsa6wTpOQA7J9iffvdeBN0q9tKzRxVxw1JviZPg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js" integrity="sha512-quHCp3WbBNkwLfYUMd+KwBAgpVukJu5MncuQaWXgCrfgcxCJAq/fo+oqrRKOj+UKEmyMCG3tb8RB63W+EmrOBg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha512-s+xg36jbIujB2S2VKfpGmlC3T5V2TF3lY48DX7u2r9XzGzgPsa6wTpOQA7J9iffvdeBN0q9tKzRxVxw1JviZPg==" crossorigin="anonymous"></script>
 
+    <!--
+        This is an SEO Change
+        I edited the localhost link to be https instead of http
+        This allowed it to pass a "best practices" check against redirecting to http instead of https
+    -->
     <script>
         var dataSource = {
                 datasets: [
@@ -152,7 +165,7 @@
         }
 
         function getBudget() {
-            axios.get('http://localhost:3000/budget')
+            axios.get('https://localhost:3000/budget')
             .then(function (res) {
                 for (var i = 0; i < res.data.myBudget.length; i++) {
                     dataSource.datasets[0].data[i] = res.data.myBudget[i].budget;

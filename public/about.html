@@ -1,1 +1,50 @@
-About
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--
+        This is an SEO Change
+        The title was made slightly longer to fit into the "ideal length"
+        I changed this due to the Woorank results of my page
+    -->
+    <title>Personal Budget About</title>
+    <meta name="description" content="A free personal budget app">
+    <meta name="keywords" content="app free budget finance">
+    <!--
+        This is a Semantic HTML Change
+        This was added to help load the background image of the top of the page
+        I changed this because I was getting Lighthouse errors about the loading of this image
+    -->
+    <link rel="preload" as="image" href="bg.png" fetchpriority="high">
+    <!--
+        This is a Semantic HTML Change
+        I added this to reduce the "Render blocking requests" shown in the Lighthouse audit
+    -->
+    <link rel="preload" href="reset.css" as="style">
+    <link rel="preload" href="main.css" as="style">
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+
+<a href="#main" class="skip">Skip to content</a>
+
+    <nav>
+        <ul>
+            <!--
+                This is a Semantic HTML Change 
+                Links were edited to lead to the right place
+            -->
+            <li><a href="./">Homepage</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="https://google.com">Google</a></li>
+        </ul>
+    </nav>
+
+    <div class="hero">
+        <h1>About</h1>
+    </div>
+</body>
+</html>
