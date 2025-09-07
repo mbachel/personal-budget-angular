@@ -31,35 +31,49 @@
 
 <a href="#main" class="skip">Skip to content</a>
 
-    <nav>
+    <nav role="navigation">
         <ul>
             <!--
                 This is a Semantic HTML Change 
                 Links were edited to lead to the right place
             -->
-            <li><a href="./">Homepage</a></li>
+            <!--
+                This is an A11y Change
+                Added aria-label to the navbar to make screenreader experience better
+            -->
+            <li><a href="./" aria-label="go to homepage">Homepage</a></li>
             <!--
                 This is an SEO Change
                 I expanded the about and login pages only up to the navbar and "hero"
                 I got a bunch of warnings about this from a Screaming Frog SEO Report
             -->
-            <li><a href="about.html">About</a></li>
-            <li><a href="login.html">Login</a></li>
-            <li><a href="https://google.com">Google</a></li>
+            <li><a href="about.html" aria-label="learn about the app">About</a></li>
+            <li><a href="login.html" aria-label="login to the app">Login</a></li>
+            <li><a href="https://google.com" aria-label="go to google">Google</a></li>
         </ul>
     </nav>
 
-    <div class="hero">
+    <div class="hero" role="banner">
         <h1>Personal Budget</h1>
         <h2>A personal-budget management app</h2>
     </div>
 
-    <main class="center" id="main">
+    <!--
+        This is an A11y Change
+        Main was given a role of "main," the hero banner "banner," and the navigation was given the role of "navigation"
+        This is to create 3 landmarks to the page to help screenreaders
+    -->
+    <main class="center" id="main" role="main">
 
         <div class="page-area">
 
+            <!--
+                This is an A11y Change
+                I edited all articles to use h2 instead of h1
+                This is to assist screenreaders
+            -->
             <article>
-                <h1>Stay on track</h1>
+                <h2>Stay on track</h2>
                 <p>
                     Do you know where you are spending your money? If you really stop to track it down,
                     you would get surprised! Proper budget management depends on real data... and this
@@ -68,14 +82,14 @@
             </article>
     
             <article>
-                <h1>Alerts</h1>
+                <h2>Alerts</h2>
                 <p>
                     What if your clothing budget ended? You will get an alert. The goal is to never go over the budget.
                 </p>
             </article>
     
             <article>
-                <h1>Results</h1>
+                <h2>Results</h2>
                 <p>
                     People who stick to a financial plan, budgeting every expense, get out of debt faster!
                     Also, they to live happier lives... since they expend without guilt or fear... 
@@ -84,30 +98,14 @@
             </article>
     
             <article>
-                <h1>Free</h1>
+                <h2>Free</h2>
                 <p>
                     This app is free!!! And you are the only one holding your data!
                 </p>
             </article>
     
             <article>
-                <h1>Stay on track</h1>
-                <p>
-                    Do you know where you are spending your money? If you really stop to track it down,
-                    you would get surprised! Proper budget management depends on real data... and this
-                    app will help you with that!
-                </p>
-            </article>
-    
-            <article>
-                <h1>Alerts</h1>
-                <p>
-                    What if your clothing budget ended? You will get an alert. The goal is to never go over the budget.
-                </p>
-            </article>
-    
-            <article>
-                <h1>Results</h1>
+                <h2>Results</h2>
                 <p>
                     People who stick to a financial plan, budgeting every expense, get out of debt faster!
                     Also, they to live happier lives... since they expend without guilt or fear... 
@@ -116,7 +114,7 @@
             </article>
     
             <article>
-                <h1>Chart</h1>
+                <h2>Chart</h2>
                 <p>
                     <canvas id="myChart" width="400" height="400"></canvas>
                 </p>
