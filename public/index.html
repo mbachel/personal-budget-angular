@@ -89,15 +89,6 @@
             </article>
     
             <article>
-                <h2>Results</h2>
-                <p>
-                    People who stick to a financial plan, budgeting every expense, get out of debt faster!
-                    Also, they to live happier lives... since they expend without guilt or fear... 
-                    because they know it is all good and accounted for.
-                </p>
-            </article>
-    
-            <article>
                 <h2>Free</h2>
                 <p>
                     This app is free!!! And you are the only one holding your data!
@@ -163,7 +154,7 @@
         }
 
         function getBudget() {
-            axios.get('https://localhost:3000/budget')
+            axios.get('/budget')
             .then(function (res) {
                 for (var i = 0; i < res.data.myBudget.length; i++) {
                     dataSource.datasets[0].data[i] = res.data.myBudget[i].budget;
