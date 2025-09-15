@@ -103,13 +103,24 @@
                     because they know it is all good and accounted for.
                 </p>
             </article>
-    
-            <article>
-                <h2>Chart</h2>
-                <p>
-                    <canvas id="myChart" width="400" height="400"></canvas>
-                </p>
-            </article>
+
+            <!--
+                Added div with charts class to use CSS to stack the charts
+                Putting them side-by-side didn't look right to me
+            -->
+            <div class="charts">
+                <article>
+                    <h2>Budget Chart</h2>
+                    <p>
+                        <canvas id="myChart" width="400" height="400"></canvas>
+                    </p>
+                </article>
+
+                <article style="max-width: none; align-content: center;">
+                    <h2>D3JS Chart</h2>
+                    <div id="d3chart"></div>
+                </article>
+            </div>
 
         </div>
 
@@ -123,6 +134,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js" integrity="sha512-quHCp3WbBNkwLfYUMd+KwBAgpVukJu5MncuQaWXgCrfgcxCJAq/fo+oqrRKOj+UKEmyMCG3tb8RB63W+EmrOBg==" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha512-s+xg36jbIujB2S2VKfpGmlC3T5V2TF3lY48DX7u2r9XzGzgPsa6wTpOQA7J9iffvdeBN0q9tKzRxVxw1JviZPg==" crossorigin="anonymous"></script>
+    <script src="https://d3js.org/d3.v3.min.js"></script>
 
     <!--
         This is an SEO Change
@@ -130,6 +142,7 @@
         This allowed it to pass a "best practices" check against redirecting to http instead of https
     -->
     <script>
+        //This is for the ChartJS chart
         var dataSource = {
                 datasets: [
                     {
@@ -162,12 +175,119 @@
                 for (var i = 0; i < res.data.myBudget.length; i++) {
                     dataSource.datasets[0].data[i] = res.data.myBudget[i].budget;
                     dataSource.labels[i] = res.data.myBudget[i].title;
-                    createChart();
                 }
+                createChart();
+                color.domain(dataSource.labels);
+                change(dataAssign());
             });
         }
 
         getBudget();
+
+        //This is for the D3JS chart
+        var svg = d3.select("#d3chart")
+            .append("svg")
+            .append("g");
+
+        svg.append("g")
+            .attr("class", "slices");
+        svg.append("g")
+            .attr("class", "labels");
+        svg.append("g")
+            .attr("class", "lines");
+
+        var width = 960,
+            height = 400,
+            radius = Math.min(width, height) / 2;
+        
+        var pie = d3.layout.pie()
+            .sort(null)
+            .value(function(d) {
+                return d.value;
+            });
+        
+        var arc = d3.svg.arc()
+            .outerRadius(radius * 0.8)
+            .innerRadius(radius * 0.4);
+
+        var outerArc = d3.svg.arc()
+            .innerRadius(radius * 0.9)
+            .outerRadius(radius * 0.9);
+
+        svg.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+        var key = function(d) {
+            return d.data.label;
+        };
+
+        var color = d3.scale.ordinal()
+            .domain(dataSource.labels)
+            .range(dataSource.datasets[0].backgroundColor);
+
+        function dataAssign() {
+            var labels = color.domain();
+            return labels.map(function(label, i) {
+                return { label: label, value: dataSource.datasets[0].data[i] };
+            });
+        }
+
+        function change(data) {
+            //  slices --------------------------------------------------------------------------------------
+            var slice = svg.select(".slices").selectAll("path.slice")
+                .data(pie(data), key);
+            
+            slice.enter()
+                .append("path")
+                .style("fill", function(d) {
+                    return color(d.data.label);
+                })
+                .attr("class", "slice")
+                .attr("d", arc);
+
+            slice.exit()
+                .remove();
+
+            //  text labels --------------------------------------------------------------------------------------
+            var text = svg.select(".labels").selectAll("text")
+                .data(pie(data), key);
+
+            text.enter()
+                .append("text")
+                .attr("dy", ".35em")
+                .attr("transform", d => {
+                    var pos = outerArc.centroid(d);
+                    pos[0] = radius * 1.05 * (midAngle(d) < Math.PI ? 1 : -1);
+                    return "translate(" + pos + ")";
+                })
+                .style("text-anchor", d => midAngle(d) < Math.PI ? "start":"end")
+                .style("fill", "black")
+                .style("font-size", "14px")
+                .style("font-family", "Tahoma, Arial")
+                .text(d => d.data.label);
+
+            function midAngle(d) {
+                return d.startAngle + (d.endAngle - d.startAngle)/2;
+            }
+
+            text.exit()
+                .remove();
+
+            //slice to text polylines --------------------------------------------------------------------------------------
+            
+            var polyline = svg.select(".lines").selectAll("polyline")
+                .data(pie(data), key);
+                
+            polyline.enter()
+                .append("polyline")
+                .attr("points", d => {
+                    var pos = outerArc.centroid(d);
+                    pos[0] = radius * 1.05 * (midAngle(d) < Math.PI ? 1 : -1);
+                    return [arc.centroid(d), outerArc.centroid(d), pos];
+                });
+
+            polyline.exit()
+                .remove();
+        };
     </script>
 
 </body>
